@@ -1,0 +1,121 @@
+{% load static %}
+
+<!-- profile modal -->
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <a href="{% url 'accounts' request.user.id %}" class="_GY65t list-group-item">Account</a>
+                <a href="{% url 'change_password' %}" class="_GY65t list-group-item">Change
+                    Password</a>
+                <a href="{% url 'users_edits' %}" class="_GY65t list-group-item">Edit</a>
+                <a href="{% url 'logout' %}" class="_GY65t list-group-item">Logout</a>
+                <a href="" style="border: none;color: #b12e2e;" class="list-group-item" data-bs-dismiss="modal"
+                    aria-label="Close">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end profile modal -->
+
+
+<!-- search modal -->
+<div class="modal fade" id="searchModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="_frBNh">
+                <form action="{% url 'searchforusers' %}" method="POST">
+                    {% csrf_token %}
+                    <input class="_SDRE me-2" type="search" name="search_users" placeholder="Search..."
+                        aria-label="Search">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search modal -->
+
+
+<!-- user post modal -->
+<div class="modal fade" id="UserPostModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog _jNHB modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                {% for pd in post_data1 %}
+                <a href="{% url 'user_post_editing' pd.id %}" class="_GY65t list-group-item">Edit</a>
+                <form action="{% url 'user_post_delete' pd.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="list-group-item _KO__IK" value="Remove">
+                </form>
+                {% endfor %}
+                <a href="" style="border: none;color: #b12e2e;" class="list-group-item" data-bs-dismiss="modal"
+                    aria-label="Close">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end user post modal -->
+
+
+<!-- Users accounts post view modal -->
+<div class="modal fade" id="accountspostviewModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                {% for pd in post_data1 %}
+                <a href="{{pd.post.url}}" class="_GY65t list-group-item" download>Download</a>
+                {% endfor %}
+                <a href="" style="border: none;color: #b12e2e;" class="list-group-item" data-bs-dismiss="modal"
+                    aria-label="Close">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Users accounts post view modal -->
+
+
+<!-- Explore post view modal -->
+<div class="modal fade" id="ExplorepostviewModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                {% for pd in post_data1 %}
+                <a href="{{pd.post.url}}" class="_GY65t list-group-item" download>Download</a>
+                {% endfor %}
+                <a href="" style="border: none;color: #b12e2e;" class="list-group-item" data-bs-dismiss="modal"
+                    aria-label="Close">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Explore post view modal -->
+
+
+<!-- Delete Account modal -->
+<div class="modal fade" id="DeleteAccountModal" tabindex="-1" aria-labelledby="DeleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="_haed_cloe m-2" style="text-align: right;">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="_tibgv text-center">
+                    <p class="tilfbg">If you delete your {{request.user.username}} account so your all of
+                        Photos, videos and comments data are also deleted.</p>
+                </div>
+                <div class="_BTNJHU text-center mt-4 mb-4">
+                    <form action="{% url 'delete_account_func' request.user.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete Account">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Delete Account modal -->

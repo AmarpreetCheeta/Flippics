@@ -1,0 +1,301 @@
+{% extends 'flip/base.html' %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'flip/css/style.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Flippics - ({{request.user.username}})</title>
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container" style="max-width: 53rem;">
+        <a class="navbar-brand _BFT5t" href="{% url 'home' %}">Flippics</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="_vfgvt d-flex me-auto">
+                <form action="{% url 'searchforusers' %}" method="POST">
+                    {% csrf_token %}
+                    <input class="_SECD me-2" type="search" name="search_users" placeholder="Search..."
+                        aria-label="Search">
+                </form>
+            </div>
+            <div class="_HBNgy">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">
+                            <svg width="20" height="20" fill="#783299" class="bi bi-house" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'explore' %}">
+                            <svg width="20" height="20" fill="#783299" class="bi bi-people" viewBox="0 0 16 16">
+                                <path
+                                    d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'Upload' %}">
+                            <svg width="20" height="20" fill="#783299" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'Like' %}">
+                            <svg width="19" height="19" fill="#783299" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path
+                                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% if request.user.image %}
+                        <a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle">
+                            <img width="20" height="20" style="border-radius: 50%;" src="{{request.user.image.url}}"
+                                alt="">
+                        </a>
+                        {% else %}
+                        <a class="nav-link" data-bs-toggle="modal" href="#exampleModalToggle">
+                            <svg width="20" height="20" fill="#783299" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                        </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="_bGVxz">
+            <div class="nav-item">
+                <a class="nav-link" data-bs-toggle="modal" href="#searchModalToggle">
+                    <svg width="20" height="20" fill="#783299" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+{% include 'flip/modal.html' %}
+
+
+<div class="container _BGV3zx">
+    <div class="card mb-3" style="border: none;">
+        <div class="row g-0">
+            <div class="col-md-6 text-center">
+                {% if request.user.image %}
+                <div class="_GC5tr">
+                    <img class="_LKMIN" src="{{request.user.image.url}}" alt="">
+                </div>
+                {% else %}
+                <div class="_GC5tr">
+                    <svg width="150" height="150" fill="#943FEA" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                </div>
+                {% endif %}
+                <div class="_pFFGJ mt-3">
+                    <a class="_KL_y6t" href="{% url 'users_edits' %}">Edit</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="_KLMOP__">
+                    <div class="_BNU__ _PLK8i">
+                        <div class="_IKJJJ me-auto">
+                            <p class="card-text _XCT_">{{request.user.username}}</p>
+                        </div>
+                        <div class="_OOLP">
+                            <a class="_KL_y6t" href="{% url 'users_edits' %}">Edit</a>
+                        </div>
+                    </div>
+                    <div class="_BNU__ mt-2">
+                        <p class="card-text" style="font-size: 13px;color: #783299;">{{request.user.first_name}}</p>
+                    </div>
+                    <div class="_FOJUH_">
+                        <ul class="list-group list-group-horizontal _FGTYt">
+                            <li class="list-group-item text-center"
+                                style="border: none;color: #783299;font-size: 13px;">
+                                <span>{{follow_status2}}</span>
+                                <p>Follower</p>
+                            </li>
+                            <li class="list-group-item text-center"
+                                style="border: none;color: #783299;font-size: 13px;">
+                                <span>{{follow_status3}}</span>
+                                <p>Following</p>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if bio_data %}
+                    {% for bd in bio_data %}
+                    <div class="_BIO_JK">
+                        <div class="_BIHUJ_">
+                            <a class="_VXZCC" href="{{bd.web_link}}">{{bd.web_link}}</a>
+                        </div>
+                    </div>
+                    <div class="_BIO_JK">
+                        <div class="_BIHUJ_">
+                            <p class="_H_5tR">{{bd.bio}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="_BIO_JK mt-3">
+                        <div class="_BIHUJ_ _HJUJH">
+                            <p class="_H_5tR" style="color: #a5a5a5;">No bio and Link on your profile, go to edit and
+                                Add your bio and link.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5" style="max-width: 53rem;">
+    <div class="card" style="border: none;border-radius: 0%;border-top: 1px solid #dbdbdb;">
+        <div class="_GH09UJ">
+            <ul class="list-group list-group-horizontal justify-content-center">
+                <li class="list-group-item" style="border: none;border-radius: 0%;border-bottom: 1px solid #783299;">
+                    <a class="_JK__DF4" href="">
+                        <svg width="15" height="15" fill="#783299" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                            <path
+                                d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+                        </svg>
+                        Photos({{counts_posts_ph}})
+                    </a>
+                </li>
+                <li class="list-group-item" style="border: none;border-radius: 0%;">
+                    <a class="_JK__DF4" href="{% url 'videos' request.user.id %}">
+                        <svg width="15" height="15" fill="#783299" class="bi bi-camera-video" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5zm11.5 5.175 3.5 1.556V4.269l-3.5 1.556v4.35zM2 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H2z" />
+                        </svg>
+                        Videos({{counts_posts_vd}})
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="_BGHY">
+            {% if upload_data_ph %}
+            <div class="row mt-3 row-cols-3 row-cols-md-3 g-2">
+                {% for udp in upload_data_ph %}
+                <div class="col">
+                    <div class="card bg-dark text-white _LOPK90">
+                        <a href="{% url 'accounts_user_post' udp.id %}">
+                            <img src="{{udp.post.url}}" class="card-img-top _KVBN" alt="...">
+                            <div class="card-img-overlay text-center _JUI8IU">
+                                <p style="color: #ffffff;font-size: 13px;" class="_HNU8">
+                                    <svg width="16" height="16" fill="#ffffff" class="bi bi-heart-fill"
+                                        viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                    </svg>
+                                    {{udp.liked.all.count}}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="_FGT__G6 mt-5" style="color: #c2c2c2;">
+                <div class="text-center">
+                    <svg width="100" height="100" fill="#c2c2c2" class="bi bi-camera-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                        <path
+                            d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+                    </svg>
+                    <p class="mt-3">Empty photos folder</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Side bar for media phones -->
+<div class="_fbved4">
+    <div class="card _BVt5">
+        <ul class="list-group list-group-horizontal justify-content-center">
+            <li class="list-group-item _fbgvT5">
+                <a class="" href="{% url 'home' %}">
+                    <svg width="25" height="25" fill="#783299" class="bi bi-house" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd"
+                            d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="list-group-item _fbgvT5">
+                <a class="" href="{% url 'explore' %}">
+                    <svg width="25" height="25" fill="#783299" class="bi bi-people" viewBox="0 0 16 16">
+                        <path
+                            d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="list-group-item _fbgvT5">
+                <a class="" href="{% url 'Upload' %}">
+                    <svg width="25" height="25" fill="#783299" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="list-group-item _fbgvT5">
+                <a class="" href="{% url 'Like' %}">
+                    <svg width="25" height="25" fill="#783299" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="list-group-item _fbgvT5">
+                {% if request.user.image %}
+                <a class="" data-bs-toggle="modal" href="#exampleModalToggle">
+                    <img width="25" height="25" style="border-radius: 50%;" src="{{request.user.image.url}}" alt="">
+                </a>
+                {% else %}
+                <a class="" data-bs-toggle="modal" href="#exampleModalToggle">
+                    <svg width="25" height="25" fill="#783299" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- end Side bar for media phones -->
+
+{% endblock %}

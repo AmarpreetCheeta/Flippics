@@ -1,0 +1,47 @@
+{% extends 'flip/base.html' %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'flip/css/accounts.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Flippics - Authentications</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5" style="max-width: 20rem;">
+    <div class="card" style="border: none;">
+        <div class="_FgYBH text-center">
+            <h2 class="_BFT5t">Flippics</h2>
+        </div>
+        <div class="_GFTV text-center mt-3 mb-3">
+            <p class="card-text">Don't have an account <a class="_JKIO" href="{% url 'registration' %}">Sign Up</a></p>
+        </div>
+        <div class="_FGVV">
+            <div class="frHHUJ">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                    {{fm}}
+                    {% endfor %}
+
+                    {% if form.non_field_errors %}
+                    {% for err in form.non_field_errors %}
+                    <div class="_ERFD text-center mt-3">
+                        <p class="card-text text-danger">{{err}}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <input type="submit" class="_JI8H" value="Log In">
+                </form>
+            </div>
+        </div>
+        <!-- <div class="_NJMIK mt-4 text-center">
+            <a href="{% url 'password_reset' %}" class="card-text _GBXC">Forget Password?</a>
+        </div> -->
+    </div>
+</div>
+
+{% endblock %}

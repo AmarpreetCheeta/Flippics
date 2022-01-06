@@ -1,0 +1,49 @@
+{% extends 'flip/base.html' %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'flip/css/accounts.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Flippics - Registration</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5" style="max-width: 30rem;">
+    <div class="card" style="border: none;">
+        <div class="_FgYBH text-center">
+            <h2 class="_BFT5t">Flippics</h2>
+        </div>
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="alert mt-4 _SDFT5 alert-dismissible fade show" role="alert">
+            {{msg}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="_GFTV text-center mt-3 mb-3">
+            <p class="card-text">Already have account <a class="_JKIO" href="{% url 'authentications' %}">Log In</a></p>
+        </div>
+        <div class="_FGVV">
+            <div class="frHHUJ text-center">
+                <div class="container" style="max-width: 20rem;">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% for fm in form %}
+                        {{fm}}
+                        <p class="card-text">
+                            {{fm.errors|striptags}}
+                        </p>
+                        {% endfor %}
+                        <input type="submit" class="_JI8H" value="Sign Up">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

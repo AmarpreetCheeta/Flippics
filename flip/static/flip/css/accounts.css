@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+
+._BFT5t{
+    color: #783299;
+    font-weight: 750;
+    font-family: 'Courgette', cursive;
+}
+
+._INMUI{
+    padding: 6px;
+    width: 100%;
+    margin-top: 1rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding-left: 10px;
+}
+
+._JKIO{
+    text-decoration: none;
+    color: #783299;
+}
+
+._JKIO:hover{
+    color: #783299;
+}
+
+._JI8H{
+    padding: 6px;
+    border: none;
+    border-radius: 3px;
+    background-color: #783299;
+    color: #ffffff;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+._GBXC{
+    text-decoration: none;
+    color: #783299;
+    font-size: 13px;
+}
+
+._GBXC:hover{
+    color: #783299;
+}
+
+._SDFT5{
+    color: #783299;
+    border:1px solid #783299;
+}
+
+
+@media (max-width: 360px){
+    ._SDFT5{
+        font-size: 12px;
+    }
+}
